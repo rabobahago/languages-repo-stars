@@ -1,12 +1,14 @@
 import React from 'react'
 
-const Nav = (props) => {
+const Nav = ({ onSelectLanguage }) => {
   const languages = ['all', 'javascript', 'ruby', 'python']
   return (
     <nav>
       <ul>
-        {languages.map((language) => (
-          <li key={language}>{language}</li>
+        {languages.map((lang) => (
+          <li key={lang} onClick={() => onSelectLanguage(lang)}>
+            {lang}
+          </li>
         ))}
       </ul>
     </nav>

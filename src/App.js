@@ -16,10 +16,41 @@ const API = {
 }
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      repos: [],
+      activeLanguage: 'all',
+      loading: true,
+    }
+  }
+  handleSelectLanguage = (lang) => {
+    this.setState(() => {
+      return {
+        activeLanguage: lang,
+      }
+    })
+  }
+  fetchRepos = (lang) => {
+    this.setState(() => {
+      return {
+        loading: true,
+      }
+    })
+    API.fetchPopularRepos(lang).then((repos) => {
+      this.setState(() => {
+        return {
+          loading: false,
+          repos: repos,
+        }
+      })
+    })
+  }
   render() {
     return (
       <div>
-        <Nav />
+        <Nav onSelectLanguage={this.handleSelectLanguage} />
+        <h3>Active Language:{this.state.activeLanguage}</h3>
       </div>
     )
   }
