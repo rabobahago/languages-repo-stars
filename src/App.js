@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from './components/Nav'
-const API = {
+import DataUpdate from './components/DataUpdate'
+window.API = {
   fetchPopularRepos(language = 'all') {
     const encodedURI = encodeURI(
       `https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`,
@@ -31,17 +32,17 @@ class App extends React.Component {
       }
     })
   }
-  fetchRepos = (lang) => {
+  handleFetchRepos = (lang) => {
     this.setState(() => {
       return {
         loading: true,
       }
     })
-    API.fetchPopularRepos(lang).then((repos) => {
+    window.API.fetchPopularRepos(lang).then((data) => {
       this.setState(() => {
         return {
           loading: false,
-          repos: repos,
+          repos: data,
         }
       })
     })
@@ -50,7 +51,7 @@ class App extends React.Component {
     return (
       <div>
         <Nav onSelectLanguage={this.handleSelectLanguage} />
-        <h3>Active Language:{this.state.activeLanguage}</h3>
+        <DataUpdate onFetchRepos={this.handleFetchRepos} state={this.state} />
       </div>
     )
   }
