@@ -5,6 +5,11 @@ class DataUpdate extends React.Component {
   componentDidMount() {
     this.props.onFetchRepos(this.props.state.activeLanguage)
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.state.activeLanguage !== this.props.state.activeLanguage) {
+      this.props.onFetchRepos(this.props.state.activeLanguage)
+    }
+  }
   render() {
     const { repos, activeLanguage, loading } = this.props.state
     return (
